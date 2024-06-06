@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "linear_allocator.h"
 
@@ -8,7 +9,7 @@ linear_allocator_t linear_init(const size_t cap) {
     linear_allocator_t allocator = {0};
 
     allocator.cap = cap <= 0 ? DEFAULT_ALLOC_CAP : cap;
-    allocator.ptr = memalign(allocator.cap, sizeof(uintptr_t));
+    allocator.ptr = (uintptr_t)memalign(allocator.cap, sizeof(uintptr_t));
 
     return allocator;
 }
@@ -27,7 +28,7 @@ void* linear_alloc(linear_allocator_t* allocator, const size_t size) {
         return NULL;
     }
 
-    void* region_start_p = allocator->ptr + allocator->offset;
+    void* region_start_p = (void*)(allocator->ptr + allocator->offset);
 
     allocator->offset += alloc_size;
 
@@ -42,7 +43,7 @@ void linear_reset(linear_allocator_t* allocator) {
 void linear_free_all(linear_allocator_t* allocator) {
     assert(allocator);
 
-    free(allocator->ptr);
+    free((void*)allocator->ptr);
     allocator->cap = 0;
     allocator->offset = 0;
 }

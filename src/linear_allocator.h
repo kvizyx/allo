@@ -21,4 +21,4 @@ void linear_free_all(linear_allocator_t* allocator);
 static size_t calculate_alignment(const uintptr_t addr, const size_t aligner);
 
 
-#endif LINEAR_ALLOCATOR_H
+#endif
