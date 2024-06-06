@@ -13,12 +13,12 @@ typedef struct
     size_t    cap;
 } linear_allocator_t;
 
-linear_allocator_t linear_init(size_t cap);
-void* linear_alloc(linear_allocator_t* allocator, size_t size);
+linear_allocator_t linear_init(const size_t cap);
+void* linear_alloc(linear_allocator_t* allocator, const size_t size);
 void linear_realloc(linear_allocator_t* allocator);
 void linear_free_all(linear_allocator_t* allocator);
 
-static size_t uintptr_alignment(uintptr_t addr);
+static size_t calculate_alignment(const uintptr_t addr, const size_t aligner);
 
 
 #endif LINEAR_ALLOCATOR_H
